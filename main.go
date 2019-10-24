@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"net/http"
+	"time"
 
 	"./controllers"
 	m "./models"
@@ -23,6 +25,7 @@ func main() {
 		AllowedMethods: []string{"GET", "HEAD", "POST", "PUT", "OPTIONS", "DELETE"}, // Allowing only get, just an example
 	})
 
+	rand.Seed(time.Now().UnixNano())
 	router.HandleFunc("/api/traits", controllers.CreateClassTrait).Methods("POST")
 	router.HandleFunc("/api/traits", controllers.GetClassTraits).Methods("GET")
 

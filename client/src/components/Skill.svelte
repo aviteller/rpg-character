@@ -142,7 +142,7 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>name</th>
+        <th>modifier</th>
       </tr>
     </thead>
     <tbody>
