@@ -3,36 +3,10 @@
   import Select from "./Select.svelte";
 
   let loading = true;
-  let traits = [];
-  let classes = [];
+  let skills = [];
   let attributes = [];
-  let modifier = 0;
-  let class_id = "";
+  let name = "";
   let attribute_id = "";
-
-  const getClasses = () => {
-    fetch(`http://localhost:9000/api/class`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("Issue fetching classes");
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (data.data) {
-          classes = data.data;
-          classes.forEach(c => {
-            c["value"] = c["id"];
-            c["label"] = c["title"];
-            delete c["id"];
-            delete c["title"];
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
 
   const getAttributes = () => {
     fetch(`http://localhost:9000/api/attribute`)
@@ -59,19 +33,19 @@
       });
   };
 
-  const getTraits = () => {
+  const getSkills = () => {
     loading = true;
-    fetch(`http://localhost:9000/api/traits`)
+    fetch(`http://localhost:9000/api/skills`)
       .then(res => {
         if (!res.ok) {
-          throw new Error("Issue fetching traits");
+          throw new Error("Issue fetching skills");
           loading = false;
         }
         return res.json();
       })
       .then(data => {
         if (data.data) {
-          traits = data.data;
+          skills = data.data;
         }
         loading = false;
       })
@@ -82,9 +56,8 @@
   };
 
   onMount(async () => {
-    await getClasses();
     await getAttributes();
-    await getTraits();
+    await getSkills();
   });
 
   const handleSelect = (e, field) => {
@@ -99,17 +72,16 @@
   };
 
   const onSubmit = () => {
-    const newTrait = {
-      modifier,
-      class_id,
+    const newSkill = {
+      name,
       attribute_id
     };
 
-    console.log(newTrait);
+    console.log(newSkill);
 
-    fetch("http://localhost:9000/api/traits", {
+    fetch("http://localhost:9000/api/skills", {
       method: "POST",
-      body: JSON.stringify(newTrait),
+      body: JSON.stringify(newSkill),
       headers: { "Content-Type": "application/json" }
     })
       .then(res => {
@@ -154,11 +126,10 @@
 
 {#if !loading}
   <div class="form">
-    <Select options={classes} on:selectchange={e => handleSelect(e, 'class')} />
     <Select
       options={attributes}
       on:selectchange={e => handleSelect(e, 'attribute')} />
-    <input type="number" bind:value={modifier} />
+    <input type="text" bind:value={name} />
     <div>
 
       <button on:click={onSubmit}>Add Trait</button>
@@ -166,25 +137,24 @@
   </div>
 {/if}
 
-{#if traits.length > 0 && !loading}
+{#if skills.length > 0 && !loading}
   <table>
     <thead>
       <tr>
         <th>ID</th>
-        <th>modifier</th>
+        <th>name</th>
       </tr>
     </thead>
     <tbody>
-      {#each traits as c}
+      {#each skills as c}
         <tr>
           <td>{c.id}</td>
-          <td>{getClassName(c.class_id)}</td>
           <td>{getAttributeName(c.attribute_id)}</td>
-          <td>{c.modifier}</td>
+          <td>{c.name}</td>
         </tr>
       {/each}
     </tbody>
   </table>
 {:else}
-  <h1>Add traits</h1>
+  <h1>Add skills</h1>
 {/if}

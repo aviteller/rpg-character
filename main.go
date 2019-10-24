@@ -32,6 +32,9 @@ func main() {
 	router.HandleFunc("/api/attribute", controllers.CreateCharacterAttribute).Methods("POST")
 	router.HandleFunc("/api/attribute", controllers.GetCharacterAttributes).Methods("GET")
 
+	router.HandleFunc("/api/skills", controllers.CreateCharacterSkill).Methods("POST")
+	router.HandleFunc("/api/skills", controllers.GetCharacterSkills).Methods("GET")
+
 	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("client/public").HTTPBox()))
 
 	port := "9000"

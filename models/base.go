@@ -10,6 +10,7 @@ func InitTables() {
 	//INSERT INTO `class` (title) VALUES ("Warrior"),("Paladin"),("Barbarian"),("Monk"),("Ranger"),("Rogue"),("Mage"),("Healer"),("Driud");
 	GetDB().Exec("CREATE TABLE IF NOT EXISTS class (id INTEGER PRIMARY KEY autoincrement, title text)")
 	GetDB().Exec("CREATE TABLE IF NOT EXISTS character_attributes (id INTEGER PRIMARY KEY autoincrement, name text)")
+	GetDB().Exec("CREATE TABLE IF NOT EXISTS character_skills (id INTEGER PRIMARY KEY autoincrement, name text, attribute_id int)")
 }
 
 //GetDB opens connection to sqlite db
