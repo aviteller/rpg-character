@@ -63,6 +63,6 @@ func (ca *CharacterAttribute) Create() map[string]interface{} {
 		fmt.Println(err)
 	}
 	ca.ID = int(lastid)
-	res["class"] = ca
+	res["data"] = ca
 	return res
 }

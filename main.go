@@ -29,11 +29,11 @@ func main() {
 	router.HandleFunc("/api/traits", controllers.CreateClassTrait).Methods("POST")
 	router.HandleFunc("/api/traits", controllers.GetClassTraits).Methods("GET")
 
-	router.HandleFunc("/api/class", controllers.CreateCharacterClass).Methods("POST")
-	router.HandleFunc("/api/class", controllers.GetCharacterClasses).Methods("GET")
+	router.HandleFunc("/api/classes", controllers.CreateCharacterClass).Methods("POST")
+	router.HandleFunc("/api/classes", controllers.GetCharacterClasses).Methods("GET")
 
-	router.HandleFunc("/api/attribute", controllers.CreateCharacterAttribute).Methods("POST")
-	router.HandleFunc("/api/attribute", controllers.GetCharacterAttributes).Methods("GET")
+	router.HandleFunc("/api/attributes", controllers.CreateCharacterAttribute).Methods("POST")
+	router.HandleFunc("/api/attributes", controllers.GetCharacterAttributes).Methods("GET")
 
 	router.HandleFunc("/api/skills", controllers.CreateCharacterSkill).Methods("POST")
 	router.HandleFunc("/api/skills", controllers.GetCharacterSkills).Methods("GET")

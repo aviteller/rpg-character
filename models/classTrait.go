@@ -66,6 +66,6 @@ func (ct *ClassTrait) Create() map[string]interface{} {
 		fmt.Println(err)
 	}
 	ct.ID = int(lastid)
-	res["trait"] = ct
+	res["data"] = ct
 	return res
 }

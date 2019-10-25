@@ -64,6 +64,6 @@ func (cs *CharacterSkill) Create() map[string]interface{} {
 		fmt.Println(err)
 	}
 	cs.ID = int(lastid)
-	res["class"] = cs
+	res["data"] = cs
 	return res
 }

@@ -1,60 +1,66 @@
 <script>
   import { onMount } from "svelte";
+  import { postData } from "../functions";
 
-  let loading = true;
-  let classes = [];
+  //let loading = true;
+  export let classes;
   let title = "";
 
-  const getClasses = () => {
-    loading = true
-    fetch(`http://localhost:9000/api/class`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("Issue fetching classes");
-          loading = false;
-        }
-        return res.json();
-      })
-      .then(data => {
-        if(data.data) {
-        classes = data.data;
-        }
-        loading = false;
-      })
-      .catch(err => {
-        loading = false;
-        console.log(err);
-      });
-  };
+  // const getClasses = () => {
+  //   loading = true;
+  //   fetch(`http://localhost:9000/api/class`)
+  //     .then(res => {
+  //       if (!res.ok) {
+  //         throw new Error("Issue fetching classes");
+  //         loading = false;
+  //       }
+  //       return res.json();
+  //     })
+  //     .then(data => {
+  //       if (data.data) {
+  //         classes = data.data;
+  //       }
+  //       loading = false;
+  //     })
+  //     .catch(err => {
+  //       loading = false;
+  //       console.log(err);
+  //     });
+  // };
 
-  onMount(() => {
-    getClasses();
-  });
+  // onMount(() => {
+  //   getClasses();
+  // });
 
   const onSubmit = () => {
     const newClass = {
       title
     };
 
-    fetch("http://localhost:9000/api/class", {
-      method: "POST",
-      body: JSON.stringify(newClass),
-      headers: { "Content-Type": "application/json" }
+    postData('classes', newClass).then(res => {
+      title = "";
+      console.log(res)
     })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("Failed");
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (!data.status) {
-          throw new Error(data.message);
-        }
-        title = "";
-        getClasses();
-      })
-      .catch(err => console.log(err));
+
+    // fetch("http://localhost:9000/api/class", {
+    //   method: "POST",
+    //   body: JSON.stringify(newClass),
+    //   headers: { "Content-Type": "application/json" }
+    // })
+    //   .then(res => {
+    //     if (!res.ok) {
+    //       throw new Error("Failed");
+    //     }
+    //     return res.json();
+    //   })
+    //   .then(data => {
+    //     if (!data.status) {
+    //       throw new Error(data.message);
+    //     }
+    //     title = "";
+    //     getClasses();
+    //   })
+    //   .catch(err => console.log(err));
   };
 </script>
 
@@ -63,7 +69,7 @@
   <button on:click={onSubmit}>Add Class</button>
 </div>
 
-{#if classes.length > 0 && !loading}
+{#if classes.length > 0}
   <table>
     <thead>
       <tr>
